@@ -188,33 +188,71 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(skillsSection);
   }
 
-  // --- 8. Contact Form Handling ---
+  // --- 8. Contact Form Handling via EmailJS ---
   const contactForm = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
-  
+
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const origText = submitBtn.innerHTML;
-      
-      // Visual feedback for sending
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Sending...</span> <svg class="spinner" width="16" height="16" viewBox="0 0 50 50" style="animation: spin 1s linear infinite;"><circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"></circle></svg>`;
-      
-      // Simulate API call
-      setTimeout(() => {
-        submitBtn.innerHTML = `<span>Sent Successfully!</span>`;
+      const origHTML = submitBtn.innerHTML;
+
+      // Read EmailJS IDs from data attributes on the form element
+      const serviceId  = contactForm.getAttribute('data-service-id');
+      const templateId = contactForm.getAttribute('data-template-id');
+
+      // Collect form values into template params
+      const templateParams = {
+        from_name:  document.getElementById('name').value.trim(),
+        from_email: document.getElementById('email').value.trim(),
+        message:    document.getElementById('message').value.trim(),
+        to_email:   'roshini07521@gmail.com',
+      };
+
+      // Guard: warn if credentials haven't been replaced yet
+      if (serviceId === 'YOUR_SERVICE_ID' || templateId === 'YOUR_TEMPLATE_ID') {
         formSuccess.style.display = 'block';
-        contactForm.reset();
-        
-        setTimeout(() => {
+        formSuccess.style.background = 'rgba(239,68,68,0.12)';
+        formSuccess.style.borderColor = 'rgba(239,68,68,0.3)';
+        formSuccess.style.color = '#ef4444';
+        formSuccess.textContent = 'EmailJS credentials not set. Please follow the setup guide.';
+        return;
+      }
+
+      // Show sending state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Sending...</span>';
+
+      emailjs.send(serviceId, templateId, templateParams)
+        .then(() => {
+          submitBtn.innerHTML = '<span>Sent Successfully!</span>';
+          formSuccess.style.display = 'block';
+          formSuccess.style.background = '';
+          formSuccess.style.borderColor = '';
+          formSuccess.style.color = '';
+          formSuccess.textContent = 'Message sent! I will get back to you shortly.';
+          contactForm.reset();
+
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = origHTML;
+            formSuccess.style.display = 'none';
+          }, 6000);
+        })
+        .catch((error) => {
+          console.error('EmailJS error:', error);
           submitBtn.disabled = false;
-          submitBtn.innerHTML = origText;
-          formSuccess.style.display = 'none';
-        }, 5000);
-      }, 1800);
+          submitBtn.innerHTML = origHTML;
+          formSuccess.style.display = 'block';
+          formSuccess.style.background = 'rgba(239,68,68,0.12)';
+          formSuccess.style.borderColor = 'rgba(239,68,68,0.3)';
+          formSuccess.style.color = '#ef4444';
+          formSuccess.textContent = 'Failed to send. Please email directly at roshini07521@gmail.com';
+
+          setTimeout(() => { formSuccess.style.display = 'none'; }, 8000);
+        });
     });
   }
 });
