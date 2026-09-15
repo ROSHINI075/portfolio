@@ -8,14 +8,6 @@
   <link rel="stylesheet" href="style.css">
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript">
-    // Replace these with your actual EmailJS credentials (see setup guide below)
-    (function(){
-      emailjs.init({
-        publicKey: "-mYg-yC0t18PoRqBs",
-      });
-    })();
-  </script>
 </head>
 <body>
 
@@ -538,10 +530,7 @@
       </div>
 
       <!-- Contact Form -->
-      <!-- EmailJS: Replace service_id and template_id with your actual IDs from emailjs.com -->
-      <form class="contact-form glass reveal" id="contactForm"
-        data-service-id="service_w5dx7ur"
-        data-template-id="template_7al4khi">
+      <form class="contact-form glass reveal" id="contactForm">
         <div class="form-group">
           <input type="text" id="name" class="form-input" placeholder=" " required>
           <label for="name" class="form-label">Full Name</label>
