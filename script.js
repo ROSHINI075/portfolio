@@ -137,12 +137,12 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   if (!el) return;
 
   const phrases = [
-    'Full-Stack Applications',
-    'AI-Powered Systems',
+    'Python Web Applications',
+    'AI-Powered Tools',
     'NLP & Data Solutions',
-    'Intelligent Dashboards',
-    'Voice-Controlled Assistants',
-    'End-to-End Web Platforms',
+    'Flask-Based Systems',
+    'Backend Software',
+    'Real-World Software Projects',
   ];
 
   let phraseIndex = 0;

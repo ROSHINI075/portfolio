@@ -1015,3 +1015,84 @@ footer {
   .hero-stats .stat-divider { display: none; }
   .ring-skills { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* =====================================================
+   NEW COMPONENTS — PORTFOLIO UPGRADE
+   ===================================================== */
+
+/* Code Terminal */
+.code-terminal { border-radius: var(--radius-lg); overflow: hidden; width: 100%; max-width: 500px; font-family: var(--font-mono); box-shadow: var(--shadow-lg); }
+.terminal-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.25rem; background: rgba(255,255,255,0.04); border-bottom: 1px solid var(--clr-border); }
+.t-dot { width: 12px; height: 12px; border-radius: 50%; }
+.t-red { background: #ff5f57; } .t-yellow { background: #ffbd2e; } .t-green { background: #28c840; }
+.terminal-title { font-size: 0.75rem; color: var(--clr-text-dim); margin-left: 0.5rem; }
+.terminal-body { padding: 1.5rem; font-size: 0.82rem; line-height: 1.75; color: var(--clr-text-muted); overflow-x: auto; background: rgba(0,0,0,0.25); white-space: pre; }
+.terminal-body code { font-family: var(--font-mono); }
+.c-kw { color: #c4b5fd; font-weight: 600; } .c-mod { color: #67e8f9; } .c-fn { color: #a5f3fc; }
+.c-str { color: #86efac; } .c-num { color: #fb923c; } .c-comment { color: #475569; font-style: italic; }
+
+/* Hero Additions */
+.hero-headline { font-size: clamp(0.85rem, 1.8vw, 1.05rem); font-weight: 600; color: var(--clr-primary-light); letter-spacing: 0.01em; margin-bottom: 0.75rem; opacity: 0.9; }
+.hero-social-row { display: flex; gap: 0.75rem; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; }
+.hero-social-btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 600; color: var(--clr-text-muted); background: rgba(255,255,255,0.05); border: 1px solid var(--clr-border); transition: var(--transition); }
+.hero-social-btn:hover { color: var(--clr-primary-light); border-color: var(--clr-primary); background: rgba(139,92,246,0.1); }
+
+/* Section Subtitle */
+.section-sub { font-size: 0.95rem; color: var(--clr-text-muted); margin-top: 0.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+/* Skill Level System */
+.skill-level-list { display: flex; flex-direction: column; gap: 1rem; }
+.skill-level-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; }
+.skill-level-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; padding: 0.15rem 0.6rem; border-radius: var(--radius-full); }
+.level-core    { background: rgba(74,222,128,0.15); color: #4ade80;  border: 1px solid rgba(74,222,128,0.35); }
+.level-working { background: rgba(6,182,212,0.15);  color: #67e8f9;  border: 1px solid rgba(6,182,212,0.3); }
+.level-familiar{ background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.3); }
+
+.skill-chip.chip-core    { background: rgba(74,222,128,0.1);  border-color: rgba(74,222,128,0.3);   color: #4ade80; }
+.skill-chip.chip-working { background: rgba(6,182,212,0.1);   border-color: rgba(6,182,212,0.3);    color: #67e8f9; }
+.skill-chip.chip-familiar{ background: rgba(148,163,184,0.08); border-color: rgba(148,163,184,0.2); color: #94a3b8; }
+
+.chip-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--clr-border); }
+.legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--clr-text-dim); font-weight: 500; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-core { background: #4ade80; } .dot-working { background: #67e8f9; } .dot-familiar { background: #94a3b8; }
+
+/* Projects Sub Labels */
+.projects-sub-label { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.sub-label-line { flex: 1; height: 1px; background: var(--clr-border); }
+.sub-label-text { font-size: 0.8rem; font-weight: 700; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+
+.projects-featured-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; }
+.projects-secondary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.25rem; }
+.project-card.project-secondary .project-title { font-size: 1rem; }
+.project-card.project-secondary .project-desc  { font-size: 0.84rem; }
+.project-cover-sm { padding: 1.25rem; }
+.project-icon-sm  { width: 44px; height: 44px; }
+.project-icon-sm svg { width: 22px; height: 22px; }
+
+.project-features { margin-bottom: 1rem; }
+.feature-row { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; }
+.feature-item { font-size: 0.78rem; color: var(--clr-text-muted); }
+
+.project-arch { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 1rem; padding: 0.625rem 0.875rem; background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.15); border-radius: var(--radius-md); }
+.arch-step { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; color: var(--clr-primary-light); background: rgba(139,92,246,0.12); border-radius: var(--radius-sm); padding: 0.2rem 0.5rem; }
+.arch-arrow { font-size: 0.75rem; color: var(--clr-text-dim); }
+
+.cert-skill { display: inline-block; font-size: 0.7rem; font-weight: 600; color: var(--clr-primary-light); background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.18); border-radius: var(--radius-full); padding: 0.15rem 0.6rem; margin-top: 0.3rem; }
+
+@media (max-width: 1024px) {
+  .code-terminal { max-width: 100%; }
+  .hero-headline { text-align: center; }
+  .hero-social-row { justify-content: center; }
+  .projects-featured-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .projects-secondary-grid { grid-template-columns: 1fr 1fr; }
+  .terminal-body { font-size: 0.75rem; padding: 1rem; }
+  .chip-legend { gap: 0.75rem; }
+}
+@media (max-width: 480px) {
+  .projects-secondary-grid { grid-template-columns: 1fr; }
+  .section-sub { font-size: 0.875rem; }
+  .project-arch { display: none; }
+}
