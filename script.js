@@ -137,12 +137,12 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   if (!el) return;
 
   const phrases = [
-    'Python Web Applications',
-    'AI-Powered Tools',
+    'Full-Stack Applications',
+    'AI-Powered Systems',
     'NLP & Data Solutions',
-    'Flask-Based Systems',
-    'Backend Software',
-    'Real-World Software Projects',
+    'Intelligent Dashboards',
+    'Voice-Controlled Assistants',
+    'End-to-End Web Platforms',
   ];
 
   let phraseIndex = 0;
@@ -238,75 +238,60 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
   });
 })();
 
-// ========= Contact Form with EmailJS =========
+// ========= Contact Form =========
 (function initContactForm() {
-  const EMAILJS_SERVICE_ID  = 'service_w5dx7ur';
-  const EMAILJS_TEMPLATE_ID = 'template_7al4khi';
-  const EMAILJS_PUBLIC_KEY  = '-mYg-yC0t18PoRqBs';
-
-  // Init EmailJS
-  if (typeof emailjs !== 'undefined') {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  } else {
-    window.addEventListener('load', () => {
-      if (typeof emailjs !== 'undefined') emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    });
-  }
-
   const form = $('#contactForm');
   if (!form) return;
 
   const successEl = $('#form-success');
-  const errorEl   = $('#form-error');
+  const errorEl = $('#form-error');
   const submitBtn = $('#submit-contact-btn');
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     successEl && successEl.classList.remove('visible');
-    errorEl   && errorEl.classList.remove('visible');
+    errorEl && errorEl.classList.remove('visible');
 
-    const params = {
-      from_name:  document.getElementById('contact-name')?.value.trim() || '',
-      from_email: document.getElementById('contact-email-input')?.value.trim() || '',
-      subject:    document.getElementById('contact-subject')?.value.trim() || 'Portfolio Contact',
-      message:    document.getElementById('contact-message')?.value.trim() || '',
-    };
+    const name = $('#contact-name')?.value.trim();
+    const email = $('#contact-email-input')?.value.trim();
+    const message = $('#contact-message')?.value.trim();
 
-    // Validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!params.from_name || !params.from_email || !params.message || !emailRegex.test(params.from_email)) {
+    // Basic validation
+    if (!name || !email || !message) {
       errorEl && errorEl.classList.add('visible');
       return;
     }
 
-    if (!submitBtn) return;
-    const originalHTML = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span>Sending...</span>';
-    submitBtn.disabled = true;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errorEl && errorEl.classList.add('visible');
+      return;
+    }
 
-    try {
-      if (typeof emailjs !== 'undefined') {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
-      } else {
-        throw new Error('EmailJS not loaded');
-      }
-      submitBtn.innerHTML = '<span>✓ Sent!</span>';
-      form.reset();
-      successEl && successEl.classList.add('visible');
+    // Simulate sending (opens mail client as fallback)
+    if (submitBtn) {
+      const originalHTML = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span>Sending...</span>';
+      submitBtn.disabled = true;
+
       setTimeout(() => {
         submitBtn.innerHTML = originalHTML;
         submitBtn.disabled = false;
-        successEl && successEl.classList.remove('visible');
-      }, 6000);
-    } catch (err) {
-      console.error('EmailJS error:', err);
-      submitBtn.innerHTML = originalHTML;
-      submitBtn.disabled = false;
-      // Fallback: open mail client
-      const subj = encodeURIComponent(params.subject);
-      const body = encodeURIComponent(`Name: ${params.from_name}\nEmail: ${params.from_email}\n\nMessage:\n${params.message}`);
-      window.location.href = `mailto:roshini07521@gmail.com?subject=${subj}&body=${body}`;
-      errorEl && errorEl.classList.add('visible');
+
+        // Create mailto link
+        const subject = encodeURIComponent($('#contact-subject')?.value || 'Portfolio Contact');
+        const body = encodeURIComponent(
+          `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+        );
+        window.location.href = `mailto:vpriyadharshini486@gmail.com?subject=${subject}&body=${body}`;
+
+        form.reset();
+        successEl && successEl.classList.add('visible');
+
+        setTimeout(() => {
+          successEl && successEl.classList.remove('visible');
+        }, 5000);
+      }, 1200);
     }
   });
 })();
