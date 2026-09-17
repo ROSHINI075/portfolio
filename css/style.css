@@ -2,16 +2,22 @@
    CSS Variables & Theme Tokens
    ========================================= */
 :root {
-    /* Colors */
-    --bg-color: #050505;
-    --bg-darker: #000000;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --primary-color: #00f0ff;
-    --secondary-color: #8a2be2;
-    --glass-bg: rgba(255, 255, 255, 0.03);
+    /* Colors - Warm Dark Theme */
+    --bg-color: #2c2520;
+    --bg-darker: #211c18;
+    --text-primary: #fdfbf7;
+    --text-secondary: #d4c5b0;
+    --primary-color: #e07a5f;
+    --secondary-color: #f2cc8f;
+    --glass-bg: rgba(255, 255, 255, 0.04);
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-hover: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(255, 255, 255, 0.1);
+    
+    /* Dynamic Shadows */
+    --shadow-primary: rgba(224, 122, 95, 0.3);
+    --shadow-primary-hover: rgba(224, 122, 95, 0.5);
+    --shadow-primary-light: rgba(224, 122, 95, 0.15);
+    --shadow-secondary-light: rgba(242, 204, 143, 0.15);
     
     /* Typography */
     --font-main: 'Inter', sans-serif;
@@ -27,17 +33,22 @@
     --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Theme Variables */
+/* Warm Light Theme Variables */
 body.light-theme {
-    --bg-color: #f8fafc;
-    --bg-darker: #f1f5f9;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --primary-color: #0284c7;
-    --secondary-color: #7c3aed;
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.1);
-    --glass-hover: rgba(255, 255, 255, 0.9);
+    --bg-color: #fdfbf7;
+    --bg-darker: #f5eedc;
+    --text-primary: #4a3f35;
+    --text-secondary: #7c6f60;
+    --primary-color: #e07a5f;
+    --secondary-color: #81b29a;
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glass-hover: rgba(255, 255, 255, 0.8);
+    
+    --shadow-primary: rgba(224, 122, 95, 0.25);
+    --shadow-primary-hover: rgba(224, 122, 95, 0.45);
+    --shadow-primary-light: rgba(224, 122, 95, 0.15);
+    --shadow-secondary-light: rgba(129, 178, 154, 0.15);
 }
 
 /* =========================================
@@ -59,6 +70,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
 a {
@@ -82,6 +94,7 @@ ul {
 
 .bg-darker {
     background-color: var(--bg-darker);
+    transition: background-color var(--transition-normal);
 }
 
 .section-title {
@@ -117,7 +130,7 @@ ul {
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 2rem;
-    transition: transform var(--transition-normal), background var(--transition-fast);
+    transition: transform var(--transition-normal), background var(--transition-fast), border var(--transition-fast);
 }
 
 .glass-panel:hover {
@@ -144,12 +157,12 @@ ul {
 
 .btn-primary {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: #000;
-    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+    color: #fff;
+    box-shadow: 0 4px 15px var(--shadow-primary);
 }
 
 .btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.5);
+    box-shadow: 0 6px 20px var(--shadow-primary-hover);
     transform: translateY(-2px);
 }
 
@@ -178,7 +191,7 @@ ul {
     width: 100%;
     height: var(--nav-height);
     z-index: 1000;
-    background: rgba(5, 5, 5, 0.7);
+    background: rgba(44, 37, 32, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--glass-border);
@@ -186,16 +199,16 @@ ul {
 }
 
 body.light-theme .navbar {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(253, 251, 247, 0.7);
 }
 
 .navbar.scrolled {
     height: 70px;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(33, 28, 24, 0.9);
 }
 
 body.light-theme .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(245, 238, 220, 0.95);
 }
 
 .nav-container {
@@ -213,10 +226,22 @@ body.light-theme .navbar.scrolled {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--text-primary);
+    transition: transform var(--transition-fast);
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .logo span {
     color: var(--primary-color);
+    display: inline-block;
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; text-shadow: 0 0 5px var(--shadow-primary); }
+    50% { transform: scale(1.1); opacity: 0.8; text-shadow: 0 0 15px var(--shadow-primary-hover); }
 }
 
 .nav-links {
@@ -265,7 +290,7 @@ body.light-theme .navbar.scrolled {
     color: var(--text-primary);
     font-size: 1.2rem;
     cursor: pointer;
-    transition: color var(--transition-fast);
+    transition: color var(--transition-fast), transform var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -273,6 +298,7 @@ body.light-theme .navbar.scrolled {
 
 .theme-toggle:hover {
     color: var(--primary-color);
+    transform: rotate(15deg);
 }
 
 .hamburger {
@@ -316,7 +342,7 @@ body.light-theme .navbar.scrolled {
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1rem;
-    background: linear-gradient(to right, #fff, #a0a0a0);
+    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -361,9 +387,9 @@ body.light-theme .navbar.scrolled {
 
 .social-links a:hover {
     background: var(--primary-color);
-    color: #000;
+    color: #fff;
     transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 4px 15px var(--shadow-primary);
 }
 
 .hero-visual {
@@ -386,7 +412,7 @@ body.light-theme .navbar.scrolled {
 .circle-1 {
     width: 300px;
     height: 300px;
-    background: rgba(0, 240, 255, 0.2);
+    background: var(--shadow-primary-light);
     top: 10%;
     right: 20%;
     animation: float 8s ease-in-out infinite;
@@ -395,7 +421,7 @@ body.light-theme .navbar.scrolled {
 .circle-2 {
     width: 250px;
     height: 250px;
-    background: rgba(138, 43, 226, 0.2);
+    background: var(--shadow-secondary-light);
     bottom: 10%;
     left: 20%;
     animation: float 10s ease-in-out infinite reverse;
@@ -476,8 +502,8 @@ body.light-theme .navbar.scrolled {
 
 .skill-tags span {
     padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--shadow-primary-light);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     font-size: 0.9rem;
     transition: all var(--transition-fast);
@@ -485,7 +511,7 @@ body.light-theme .navbar.scrolled {
 
 .skill-tags span:hover {
     background: var(--primary-color);
-    color: #000;
+    color: #fff;
     border-color: var(--primary-color);
 }
 
@@ -533,7 +559,7 @@ body.light-theme .navbar.scrolled {
     font-family: var(--font-heading);
     font-size: 1.4rem;
     margin-bottom: 1rem;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .project-desc {
@@ -552,7 +578,7 @@ body.light-theme .navbar.scrolled {
 .project-tech span {
     font-size: 0.8rem;
     padding: 4px 10px;
-    background: rgba(0, 240, 255, 0.1);
+    background: var(--shadow-primary-light);
     color: var(--primary-color);
     border-radius: 4px;
 }
@@ -594,7 +620,7 @@ body.light-theme .navbar.scrolled {
     height: 14px;
     border-radius: 50%;
     background: var(--primary-color);
-    box-shadow: 0 0 10px var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-primary);
     z-index: 1;
 }
 
@@ -618,7 +644,7 @@ body.light-theme .navbar.scrolled {
 .timeline-date {
     display: inline-block;
     padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--shadow-primary-light);
     border-radius: 4px;
     font-size: 0.85rem;
     margin-bottom: 1rem;
@@ -677,7 +703,7 @@ body.light-theme .navbar.scrolled {
 }
 
 .highlight-badge {
-    background: rgba(0, 240, 255, 0.1);
+    background: var(--shadow-primary-light);
     color: var(--primary-color);
     padding: 4px 10px;
     border-radius: 4px;
@@ -692,7 +718,7 @@ body.light-theme .navbar.scrolled {
 
 .cert-date {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
 }
 
 /* =========================================
@@ -722,7 +748,7 @@ body.light-theme .navbar.scrolled {
 .icon-box {
     width: 50px;
     height: 50px;
-    background: rgba(0, 240, 255, 0.1);
+    background: var(--shadow-primary-light);
     color: var(--primary-color);
     border-radius: 12px;
     display: flex;
@@ -758,7 +784,7 @@ body.light-theme .navbar.scrolled {
 .form-group textarea {
     width: 100%;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
     color: var(--text-primary);
@@ -771,7 +797,7 @@ body.light-theme .navbar.scrolled {
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: var(--primary-color);
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--glass-hover);
 }
 
 /* =========================================
@@ -781,6 +807,7 @@ footer {
     border-top: 1px solid var(--glass-border);
     padding: 3rem 0;
     background: var(--bg-color);
+    transition: background-color var(--transition-normal);
 }
 
 .footer-content {
@@ -885,12 +912,13 @@ footer {
         right: -100%;
         width: 100%;
         height: calc(100vh - var(--nav-height));
-        background: rgba(5, 5, 5, 0.95);
+        background: var(--bg-darker);
         backdrop-filter: blur(10px);
         flex-direction: column;
         align-items: center;
         justify-content: center;
         transition: right var(--transition-normal);
+        z-index: 999;
     }
     
     .nav-links.active {
