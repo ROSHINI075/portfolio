@@ -608,6 +608,7 @@ body.light-theme .navbar.scrolled {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .project-tech span {
@@ -616,6 +617,37 @@ body.light-theme .navbar.scrolled {
     background: var(--shadow-primary-light);
     color: var(--primary-color);
     border-radius: 4px;
+}
+
+.project-links {
+    margin-top: auto;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--shadow-primary-light);
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-fast);
+}
+
+.project-link:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-primary);
 }
 
 /* =========================================
