@@ -910,37 +910,14 @@ footer {
 }
 
 /* =========================================
-   Animations & Reveal Classes
+   Animations & Reveal Classes (Safe Defaults)
    ========================================= */
-.reveal {
-    opacity: 0;
-    transition: all var(--transition-slow);
-}
-
-.reveal.active {
-    opacity: 1;
-}
-
-.reveal-up {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all var(--transition-slow);
-}
-
-.reveal-up.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+.reveal,
+.reveal-up,
 .reveal-right {
-    opacity: 0;
-    transform: translateX(50px);
+    opacity: 1 !important;
+    transform: none !important;
     transition: all var(--transition-slow);
-}
-
-.reveal-right.active {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 /* Support for custom delay via inline styles */
