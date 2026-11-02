@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScamShield AI | AI Recruitment Scam Detection System</title>
+    <meta name="description" content="ScamShield AI - Intelligent AI-driven recruitment scam detection and resume analysis system by Roshini P.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .demo-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-fast);
+        }
+        .back-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateX(-3px);
+        }
+        .demo-hero {
+            padding: 130px 0 40px;
+            text-align: center;
+        }
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: var(--shadow-primary-light);
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+        .demo-title {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .demo-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+        
+        /* Demo Layout */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .presets-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+        .preset-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .preset-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--primary-color);
+            background: var(--glass-hover);
+        }
+        .preset-btn.active {
+            background: var(--shadow-primary-light);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-primary);
+        }
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all var(--transition-fast);
+        }
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: var(--primary-color);
+            background: var(--glass-hover);
+            box-shadow: 0 0 10px var(--shadow-primary-light);
+        }
+        
+        /* Result Panel */
+        .result-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            align-self: flex-start;
+        }
+        .status-danger {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+        .status-warning {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid #f59e0b;
+            color: #fbbf24;
+        }
+        .status-safe {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid #22c55e;
+            color: #4ade80;
+        }
+        
+        .score-meter {
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--glass-border);
+        }
+        .score-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+        .progress-bar-bg {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+        }
+        
+        .factors-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .factor-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+        }
+        .factor-item i {
+            margin-top: 3px;
+        }
+        .factor-item.danger i { color: #f87171; }
+        .factor-item.warning i { color: #fbbf24; }
+        .factor-item.safe i { color: #4ade80; }
+        
+        .recommendation-box {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 10px;
+            background: var(--shadow-primary-light);
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.92rem;
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        .feature-box {
+            padding: 1.8rem;
+        }
+        .feature-box i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .feature-box h4 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+        }
+        .feature-box p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 992px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            .demo-title {
+                font-size: 2.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="demo-nav">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+                <a href="index.html#projects" class="logo">ScamShield<span>.AI</span></a>
+                <a href="index.html#contact" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">
+                    Contact Developer
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section class="demo-hero">
+            <div class="demo-badge">
+                <i class="fas fa-shield-virus"></i> AI RECRUITMENT SCAM DETECTION SYSTEM
+            </div>
+            <h1 class="demo-title">Live Demonstration & Analyzer</h1>
+            <p class="demo-subtitle">
+                An interactive Natural Language Processing & Machine Learning platform engineered by <strong>Roshini P</strong> to detect fraudulent job listings, fake recruitment emails, and scam patterns in real time.
+            </p>
+        </section>
+
+        <!-- Interactive Analyzer Section -->
+        <section class="demo-grid">
+            
+            <!-- Left: Inputs & Presets -->
+            <div class="glass-panel">
+                <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem;">
+                    <i class="fas fa-search-dollar" style="color: var(--primary-color);"></i> Analyze Job Posting
+                </h3>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.2rem;">
+                    Select a realistic test case below or paste details from any recruitment message:
+                </p>
+
+                <!-- Sample Presets -->
+                <div class="presets-bar">
+                    <button type="button" class="preset-btn active" onclick="loadPreset('fake_telegram')">
+                        <i class="fas fa-exclamation-triangle"></i> Telegram Scam (Fake)
+                    </button>
+                    <button type="button" class="preset-btn" onclick="loadPreset('urgent_fee')">
+                        <i class="fas fa-money-bill-wave"></i> Registration Fee Scam
+                    </button>
+                    <button type="button" class="preset-btn" onclick="loadPreset('legit_software')">
+                        <i class="fas fa-check-circle"></i> Software Dev (Legitimate)
+                    </button>
+                </div>
+
+                <form id="analyzerForm" onsubmit="runScamAnalysis(event)">
+                    <div class="input-group">
+                        <label for="jobTitle">Job Role / Title</label>
+                        <input type="text" id="jobTitle" required placeholder="e.g. Remote Data Entry Operator">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" id="companyName" placeholder="e.g. Global Tech Solutions">
+                        </div>
+                        <div class="input-group">
+                            <label for="recruiterContact">Recruiter Contact / Email</label>
+                            <input type="text" id="recruiterContact" placeholder="e.g. hr_recruiter@gmail.com / @telegram_id">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="salaryOffer">Offered Salary / Compensation</label>
+                        <input type="text" id="salaryOffer" placeholder="e.g. ₹60,000 / week (2 hrs daily)">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="jobDescription">Job Description / Recruitment Message</label>
+                        <textarea id="jobDescription" rows="6" required placeholder="Paste full email body or job posting here..."></textarea>
+                    </div>
+
+                    <button type="submit" id="analyzeBtn" class="btn btn-primary w-100" style="padding: 14px; font-size: 1rem;">
+                        <i class="fas fa-microchip" style="margin-right: 8px;"></i> Run AI Scam Detection Analysis
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right: AI Evaluation Output -->
+            <div class="glass-panel result-panel">
+                <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem;">
+                    <i class="fas fa-chart-pie" style="color: var(--secondary-color);"></i> AI Risk Evaluation
+                </h3>
+
+                <!-- Verdict Badge -->
+                <div id="verdictBadge" class="status-badge status-danger">
+                    <i class="fas fa-exclamation-circle"></i> High Risk Scam Detected
+                </div>
+
+                <!-- Confidence & Risk Meter -->
+                <div class="score-meter">
+                    <div class="score-label">
+                        <span>Scam Probability Score</span>
+                        <span id="scorePercentage" style="color: #f87171;">94%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div id="progressBar" class="progress-bar-fill" style="width: 94%; background: #ef4444;"></div>
+                    </div>
+                </div>
+
+                <!-- Detected Risk Signals -->
+                <h4 style="font-size: 1rem; font-family: var(--font-heading); margin-bottom: 0.5rem;">Detected Indicators:</h4>
+                <div id="factorsContainer" class="factors-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Action Recommendations -->
+                <div id="recommendationBox" class="recommendation-box">
+                    <strong>Recommended Action:</strong> Do not share personal documents or transfer funds. Report this recruiter immediately.
+                </div>
+            </div>
+
+        </section>
+
+        <!-- System Architecture & Modules -->
+        <section class="section" style="padding-top: 20px;">
+            <h2 class="section-title">ScamShield AI Architecture</h2>
+            <div class="features-grid">
+                <div class="feature-box glass-panel">
+                    <i class="fas fa-network-wired"></i>
+                    <h4>NLP Text Classification</h4>
+                    <p>Applies TF-IDF vectorization and machine learning models (Random Forest / Logistic Regression) trained to differentiate scam vocabulary from legitimate corporate job offers.</p>
+                </div>
+                <div class="feature-box glass-panel">
+                    <i class="fas fa-funnel-dollar"></i>
+                    <h4>Financial Extortion Heuristics</h4>
+                    <p>Detects requests for "security deposits", "registration fees", or "training kits" disguised as employment prerequisites.</p>
+                </div>
+                <div class="feature-box glass-panel">
+                    <i class="fas fa-comments"></i>
+                    <h4>Channel Verification</h4>
+                    <p>Flags non-corporate communication channels such as unsolicited Telegram or WhatsApp recruitment messages lacking verifiable domain records.</p>
+                </div>
+                <div class="feature-box glass-panel">
+                    <i class="fas fa-file-invoice"></i>
+                    <h4>Resume ATS Optimizer</h4>
+                    <p>Compares candidate resume skill keywords against verified industry descriptions to ensure high ATS compatibility and legitimate placement.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Roshini<span>.</span></div>
+                <div class="social-links footer-social">
+                    <a href="https://github.com/ROSHINI075" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/roshini-p-575342328" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="index.html" title="Portfolio"><i class="fas fa-home"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Roshini P. ScamShield AI Project Demonstration.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Script -->
+    <script>
+        const PRESETS = {
+            fake_telegram: {
+                title: "Remote Data Entry / Typing Assistant",
+                company: "Apex Global Online Ventures",
+                contact: "hr_director99@gmail.com / Telegram @recruiter_fastjob",
+                salary: "₹50,000 / week (2 hours daily)",
+                desc: "Urgent hiring! Immediate selection without interview. Work 1-2 hours daily from home typing simple documents. You must pay a refundable security deposit of ₹1,500 for the software kit and access token before starting. Contact our manager on Telegram @recruiter_fastjob right now to claim your spot!"
+            },
+            urgent_fee: {
+                title: "Junior HR Executive Trainee",
+                company: "FastTrack Career Hub",
+                contact: "careers.fasttrack@yahoo.com",
+                salary: "₹45,000 / month",
+                desc: "Congratulations! You have been selected for the position of HR Executive. Offer letter will be released after paying ₹2,999 mandatory background check and onboarding documentation charges to our UPI ID within 24 hours. No technical round required."
+            },
+            legit_software: {
+                title: "Junior Python / Full-Stack Developer",
+                company: "CloudScale Systems Pvt Ltd",
+                contact: "talent@cloudscalesystems.com",
+                salary: "₹6,00,000 - ₹8,50,000 LPA",
+                desc: "We are seeking a Junior Software Developer proficient in Python, Flask, and relational databases. Candidates will participate in a technical coding assessment followed by a systems discussion. No application or processing fees are ever requested by our hiring team. Apply through our official portal."
+            }
+        };
+
+        function loadPreset(key) {
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('button').classList.add('active');
+
+            const p = PRESETS[key];
+            document.getElementById('jobTitle').value = p.title;
+            document.getElementById('companyName').value = p.company;
+            document.getElementById('recruiterContact').value = p.contact;
+            document.getElementById('salaryOffer').value = p.salary;
+            document.getElementById('jobDescription').value = p.desc;
+
+            // Automatically analyze
+            runScamAnalysis();
+        }
+
+        function runScamAnalysis(e) {
+            if (e) e.preventDefault();
+
+            const title = document.getElementById('jobTitle').value.toLowerCase();
+            const contact = document.getElementById('recruiterContact').value.toLowerCase();
+            const salary = document.getElementById('salaryOffer').value.toLowerCase();
+            const desc = document.getElementById('jobDescription').value.toLowerCase();
+            const fullText = `${title} ${contact} ${salary} ${desc}`;
+
+            let score = 10;
+            const factors = [];
+
+            // Pattern 1: Advance payment or fees
+            if (/deposit|fee|charge|registration|pay|upi|refundable|kit|token/i.test(fullText)) {
+                score += 45;
+                factors.push({
+                    type: 'danger',
+                    icon: 'fas fa-money-bill-wave',
+                    text: 'Financial Demand Flag: Mentions registration fee, deposit, or upfront payment (major scam indicator).'
+                });
+            }
+
+            // Pattern 2: Suspicious communication channel (Telegram / WhatsApp / public email)
+            if (/telegram|whatsapp|@gmail\.com|@yahoo\.com|@outlook\.com/i.test(contact) || /telegram|whatsapp/i.test(desc)) {
+                score += 25;
+                factors.push({
+                    type: 'danger',
+                    icon: 'fab fa-telegram-plane',
+                    text: 'Unverified Channel: Directing candidates to Telegram/WhatsApp or using public free emails instead of corporate domains.'
+                });
+            }
+
+            // Pattern 3: Unrealistic salary promises
+            if (/week|daily|50,000|60,000|1,00,000/i.test(salary) && /1-2 hours|part time|typing|simple/i.test(desc)) {
+                score += 20;
+                factors.push({
+                    type: 'warning',
+                    icon: 'fas fa-balance-scale-right',
+                    text: 'Unrealistic Compensation: Abnormally high salary promised for minimal hours or unskilled tasks.'
+                });
+            }
+
+            // Pattern 4: No interview / urgent urgency
+            if (/urgent|immediate selection|no interview|without interview|within 24 hours/i.test(fullText)) {
+                score += 15;
+                factors.push({
+                    type: 'warning',
+                    icon: 'fas fa-stopwatch',
+                    text: 'Pressure Tactics: Urgency cues ("immediate selection", "no interview required") used to bypass diligence.'
+                });
+            }
+
+            // Legitimate indicator
+            if (/no application.*fee|technical round|coding assessment|official portal/i.test(fullText) && !/deposit|fee|telegram/i.test(fullText)) {
+                score = Math.max(5, score - 30);
+                factors.push({
+                    type: 'safe',
+                    icon: 'fas fa-shield-alt',
+                    text: 'Authentic Hiring Protocol: Mentions technical evaluations and explicit zero-fee policies.'
+                });
+            }
+
+            // Cap score
+            score = Math.min(98, Math.max(5, score));
+
+            // Render updates
+            const verdictBadge = document.getElementById('verdictBadge');
+            const scorePercentage = document.getElementById('scorePercentage');
+            const progressBar = document.getElementById('progressBar');
+            const factorsContainer = document.getElementById('factorsContainer');
+            const recommendationBox = document.getElementById('recommendationBox');
+
+            scorePercentage.textContent = score + '%';
+            progressBar.style.width = score + '%';
+
+            factorsContainer.innerHTML = '';
+            factors.forEach(f => {
+                const item = document.createElement('div');
+                item.className = `factor-item ${f.type}`;
+                item.innerHTML = `<i class="${f.icon}"></i> <span>${f.text}</span>`;
+                factorsContainer.appendChild(item);
+            });
+
+            if (score >= 70) {
+                verdictBadge.className = 'status-badge status-danger';
+                verdictBadge.innerHTML = '<i class="fas fa-exclamation-circle"></i> High Risk Scam Detected';
+                scorePercentage.style.color = '#f87171';
+                progressBar.style.backgroundColor = '#ef4444';
+                recommendationBox.style.borderLeftColor = '#ef4444';
+                recommendationBox.innerHTML = '<strong>Recommended Action:</strong> High risk of fraudulent intent. Do not send funds, bank details, or personal ID copies. Discontinue contact immediately.';
+            } else if (score >= 40) {
+                verdictBadge.className = 'status-badge status-warning';
+                verdictBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Caution Advised';
+                scorePercentage.style.color = '#fbbf24';
+                progressBar.style.backgroundColor = '#f59e0b';
+                recommendationBox.style.borderLeftColor = '#f59e0b';
+                recommendationBox.innerHTML = '<strong>Recommended Action:</strong> Several suspicious flags detected. Verify the recruiter through the official company LinkedIn or corporate careers page before proceeding.';
+            } else {
+                verdictBadge.className = 'status-badge status-safe';
+                verdictBadge.innerHTML = '<i class="fas fa-check-circle"></i> Verified Legitimate Pattern';
+                scorePercentage.style.color = '#4ade80';
+                progressBar.style.backgroundColor = '#22c55e';
+                recommendationBox.style.borderLeftColor = '#22c55e';
+                recommendationBox.innerHTML = '<strong>Recommended Action:</strong> The listing matches legitimate corporate recruitment criteria with professional interview standards.';
+            }
+        }
+
+        // Initialize with default preset
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPreset('fake_telegram');
+        });
+    </script>
+</body>
+</html>
