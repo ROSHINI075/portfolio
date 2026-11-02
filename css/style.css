@@ -597,6 +597,15 @@ body.light-theme .navbar.scrolled {
     color: var(--text-primary);
 }
 
+.project-title a {
+    color: inherit;
+    transition: color var(--transition-fast);
+}
+
+.project-title a:hover {
+    color: var(--primary-color);
+}
+
 .project-desc {
     color: var(--text-secondary);
     font-size: 0.95rem;
