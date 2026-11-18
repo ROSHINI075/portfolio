@@ -795,6 +795,30 @@ body.light-theme .navbar.scrolled {
 .cert-date {
     font-size: 0.85rem;
     color: var(--text-secondary);
+    display: block;
+}
+
+.cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-top: 0.6rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--shadow-primary-light);
+    border: 1px solid var(--glass-border);
+    transition: all var(--transition-fast);
+}
+
+.cert-link:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-primary);
 }
 
 /* =========================================
